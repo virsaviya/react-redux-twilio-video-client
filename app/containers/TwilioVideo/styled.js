@@ -29,7 +29,7 @@ export const LocalMedia = styled.div`
   height: 200px;
 `;
 
-export const Instructions = styled.div`
+export const Controls = styled.div`
   background-color: #565656;
   width: calc(100% - 40px);
   margin: 0 20px 20px 20px;

@@ -19,7 +19,7 @@ import {
   Wrapper,
   LocalMedia,
   RemoteMedia,
-  Instructions,
+  Controls,
 } from './styled';
 
 export class TwilioVideo extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -29,7 +29,7 @@ export class TwilioVideo extends React.PureComponent { // eslint-disable-line re
         <RemoteMedia>
           <LocalMedia />
         </RemoteMedia>
-        <Instructions />
+        <Controls />
       </Wrapper>
     );
   }
