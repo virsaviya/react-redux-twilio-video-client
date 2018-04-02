@@ -15,12 +15,21 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectTwilioVideo from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { Wrapper } from './styled';
+import {
+  Wrapper,
+  LocalMedia,
+  RemoteMedia,
+  Instructions,
+} from './styled';
 
 export class TwilioVideo extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <Wrapper>HI
+      <Wrapper>
+        <RemoteMedia>
+          <LocalMedia />
+        </RemoteMedia>
+        <Instructions />
       </Wrapper>
     );
   }
