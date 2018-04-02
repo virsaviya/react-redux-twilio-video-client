@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GRAY, DARK_FONT, LIGHT_BACKGROUND, WHITE } from 'globalConstants/colors';
+import {
+  DARK_FONT,
+  GRAY,
+  LIGHT_BACKGROUND,
+  WHITE,
+} from 'globalConstants/colors';
 import { JOIN_ROOM_WIDTH, PAGE_MARGIN } from 'globalConstants/sizes';
 
 export const Wrapper = styled.div`
@@ -24,7 +29,7 @@ flex-direction: column;
 
 export const Input = styled.input`
   background-color: ${LIGHT_BACKGROUND};
-  border-radius: 4px;
+  border-radius: 2px;
   height: 40px;
   width: ${JOIN_ROOM_WIDTH};
   color: ${DARK_FONT};
@@ -34,7 +39,7 @@ export const Input = styled.input`
 export const Button = styled.button`
   background-color: transparent;
   border: 1px solid ${WHITE};
-  border-radius: 4px;
+  border-radius: 2px;
   height: 40px;
   width: ${JOIN_ROOM_WIDTH};
   padding: 0 15px;
