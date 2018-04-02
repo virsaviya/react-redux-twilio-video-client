@@ -19,12 +19,18 @@ export const Wrapper = styled.div`
   color: #eeeeee;
 `;
 
+export const Header = styled.h1`
+  text-align: center;
+  margin: 5px 0;
+`;
+
 export const RemoteMedia = styled.div`
-background-color: ${DARK_GRAY};
-position: relative;
-height: calc(100% - 100px);
-width: calc(100% - 40px);
-margin: ${PAGE_MARGIN};
+  background-color: ${DARK_GRAY};
+  position: relative;
+  height: calc(100% - 100px);
+  width: calc(100% - 40px);
+  margin: ${PAGE_MARGIN};
+  margin-top: 0;
 `;
 
 export const LocalMedia = styled.div`

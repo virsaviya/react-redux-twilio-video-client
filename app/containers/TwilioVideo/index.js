@@ -12,11 +12,13 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import Controls from 'components/Controls'
 import makeSelectTwilioVideo from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import Controls from 'components/Controls'
+import { fetchTokenRequest } from './actions';
 import {
+  Header,
   LocalMedia,
   RemoteMedia,
   Wrapper,
@@ -24,33 +26,33 @@ import {
 
 export class TwilioVideo extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
+    const { roomName } = this.props;
     return (
       <Wrapper>
+        <Header>{roomName ? `You are in room ${roomName}` : 'Welcome'}</Header>
         <RemoteMedia>
           <LocalMedia />
         </RemoteMedia>
-        <Controls />
+        <Controls
+          joinRoom={(roomName) => this.props.fetchToken(roomName)}
+          log={this.props.log}
+        />
       </Wrapper>
     );
   }
 }
 
 TwilioVideo.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  fetchToken: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-  twiliovideo: makeSelectTwilioVideo(),
+const mapStateToProps = (state) => makeSelectTwilioVideo(state);
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchToken: (roomName) => dispatch(fetchTokenRequest(roomName)),
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
-
 const withReducer = injectReducer({ key: 'twilioVideo', reducer });
 const withSaga = injectSaga({ key: 'twilioVideo', saga });
 

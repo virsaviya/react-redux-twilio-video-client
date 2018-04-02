@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import {
   DARK_FONT,
-  GRAY,
   LIGHT_BACKGROUND,
   WHITE,
 } from 'globalConstants/colors';
@@ -14,12 +13,6 @@ export const Wrapper = styled.div`
   height: 100px;
   display: flex;
   justify-content: space-between;
-`;
-
-export const Log = styled.div`
-  height: 90px;
-  width: calc(100% - ${JOIN_ROOM_WIDTH} - ${PAGE_MARGIN});
-  background-color: GRAY;
 `;
 
 export const JoinRoom = styled.div`
