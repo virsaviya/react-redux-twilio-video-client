@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Log from 'components/Log'
+import Log from 'components/Log';
 import {
   Button,
   Input,
@@ -22,10 +22,10 @@ export class Controls extends React.PureComponent { // eslint-disable-line react
   render() {
     return (
       <Wrapper>
-        <Log content={this.props.log}/>
+        <Log content={this.props.log} />
         <JoinRoom>
           <Input
-            onChange={(e) => this.setState({roomName: e.target.value})}
+            onChange={(e) => this.setState({ roomName: e.target.value })}
             placeholder="Room Name"
           />
           <Button onClick={() => this.props.joinRoom(this.state.roomName)}>
@@ -39,6 +39,7 @@ export class Controls extends React.PureComponent { // eslint-disable-line react
 
 Controls.propTypes = {
   joinRoom: PropTypes.func.isRequired,
+  log: PropTypes.array.isRequired,
 };
 
 export default Controls;

@@ -10,11 +10,12 @@
  */
 
 import React from 'react';
-import {Wrapper} from './styled';
+import { Wrapper } from './styled';
 
 
 export default class NotFound extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
+    // eslint-disable-next-line react/no-unescaped-entities
     return (
       <Wrapper>
         <h1>It's not you.  It's us.</h1>

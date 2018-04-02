@@ -5,26 +5,28 @@
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import {
   LogLine,
   Wrapper,
 } from './styled';
 
 class Log extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  _scrollToBottomOfLog = () => {
-    this.logEnds.scrollIntoView({ behavior: 'smooth' });
+  componentDidUpdate() {
+    this._scrollToBottomOfLog(); // eslint-disable-line no-underscore-dangle
   }
   componenetDidMount() {
-    this._scrollToBottomOfLog();
+    this._scrollToBottomOfLog(); // eslint-disable-line no-underscore-dangle
   }
-  componentDidUpdate() {
-    this._scrollToBottomOfLog();
+  _scrollToBottomOfLog = () => {
+    this.logEnds.scrollIntoView({ behavior: 'smooth' });
   }
   render() {
     return (
       <Wrapper>
         {this.props.content.map((message, idx) =>
-          <LogLine key={idx}>{`> ${message}`}</LogLine>)}
+          <LogLine key={`log-${idx}`}>{`> ${message}`}</LogLine>)} 
         <div
           style={{ float: 'right', margin: '0' }}
           ref={(el) => { this.logEnds = el; }}
@@ -35,7 +37,7 @@ class Log extends React.PureComponent { // eslint-disable-line react/prefer-stat
 }
 
 Log.propTypes = {
-
+  content: PropTypes.array.isRequired,
 };
 
 export default Log;

@@ -7,12 +7,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import Controls from 'components/Controls'
+import Controls from 'components/Controls';
 import makeSelectTwilioVideo from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -29,12 +28,12 @@ export class TwilioVideo extends React.PureComponent { // eslint-disable-line re
     const { roomName } = this.props;
     return (
       <Wrapper>
-        <Header>{roomName ? `You are in room ${roomName}` : 'Welcome'}</Header>
+        <Header>{roomName ? `You are in room '${roomName}'` : 'Welcome'}</Header>
         <RemoteMedia>
           <LocalMedia />
         </RemoteMedia>
         <Controls
-          joinRoom={(roomName) => this.props.fetchToken(roomName)}
+          joinRoom={(room) => this.props.fetchToken(room)}
           log={this.props.log}
         />
       </Wrapper>
@@ -44,6 +43,8 @@ export class TwilioVideo extends React.PureComponent { // eslint-disable-line re
 
 TwilioVideo.propTypes = {
   fetchToken: PropTypes.func.isRequired,
+  roomName: PropTypes.string,
+  log: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => makeSelectTwilioVideo(state);

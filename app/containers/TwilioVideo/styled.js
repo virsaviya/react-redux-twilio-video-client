@@ -1,8 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 import {
   DARK_BACKGROUND,
-  DARK_FONT,
   DARK_GRAY,
   GRAY,
 } from 'globalConstants/colors';
