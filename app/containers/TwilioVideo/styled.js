@@ -4,7 +4,11 @@ import {
   DARK_GRAY,
   GRAY,
 } from 'globalConstants/colors';
-import { PAGE_MARGIN } from 'globalConstants/sizes';
+import {
+  PAGE_MARGIN,
+  LOCAL_MEDIA_WIDTH,
+  LOCAL_MEDIA_HEIGHT,
+} from 'globalConstants/sizes';
 
 export const Wrapper = styled.div`
   margin: 0;
@@ -36,6 +40,6 @@ export const LocalMedia = styled.div`
   position: absolute;
   bottom: 10px;
   right: 10px;
-  width: 200px;
-  height: 200px;
+  width: ${(props) => props.hasMediaTrack ? '' : LOCAL_MEDIA_WIDTH};
+  height: ${(props) => props.hasMediaTrack ? '' : LOCAL_MEDIA_HEIGHT};
 `;

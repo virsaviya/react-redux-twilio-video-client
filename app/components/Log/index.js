@@ -26,7 +26,7 @@ class Log extends React.PureComponent { // eslint-disable-line react/prefer-stat
     return (
       <Wrapper>
         {this.props.content.map((message, idx) =>
-          <LogLine key={`log-${idx}`}>{`> ${message}`}</LogLine>)} 
+          <LogLine key={`log-${idx}`}>{`> ${message}`}</LogLine>)}
         <div
           style={{ float: 'right', margin: '0' }}
           ref={(el) => { this.logEnds = el; }}

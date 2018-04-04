@@ -29,6 +29,7 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
+  cursor: pointer;
   background-color: transparent;
   border: 1px solid ${WHITE};
   border-radius: 2px;
