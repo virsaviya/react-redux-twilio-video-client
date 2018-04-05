@@ -21,7 +21,7 @@ class MediaTrack extends React.PureComponent { // eslint-disable-line react/pref
     return (this.props.kind === AUDIO)
       ? (<audio
         ref={(source) => { this.source = source; }}
-        controls
+        // controls
         autoPlay
       />)
       : (<video

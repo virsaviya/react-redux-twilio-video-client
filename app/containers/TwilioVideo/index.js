@@ -34,7 +34,7 @@ export class TwilioVideo extends React.PureComponent { // eslint-disable-line re
   _renderMedia(media, kind, width) {
     if (media) {
       const track = media.find((m) => m.kind === kind);
-      return <MediaTrack track={track} width={width} />;
+      return <MediaTrack track={track} width={width} kind={kind} />;
     }
     return <div />;
   }
