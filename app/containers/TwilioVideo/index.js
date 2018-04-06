@@ -48,7 +48,7 @@ export class TwilioVideo extends React.PureComponent { // eslint-disable-line re
         <RemoteMedia>
           {this._renderMedia(remoteMedia, AUDIO)}
           {this._renderMedia(remoteMedia, VIDEO, '600px')}
-          <LocalMedia hasMediaTrack={!!this.props.localMedia}>
+          <LocalMedia hasMediaTrack={!!this.props.localMedia.length}>
             {this._renderMedia(localMedia, AUDIO)}
             {this._renderMedia(localMedia, VIDEO, LOCAL_MEDIA_WIDTH)}
           </LocalMedia>

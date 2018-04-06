@@ -38,8 +38,8 @@ export const RemoteMedia = styled.div`
 export const LocalMedia = styled.div`
   background-color: ${GRAY};
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 0;
+  right: 0;
   width: ${(props) => props.hasMediaTrack ? '' : LOCAL_MEDIA_WIDTH};
   height: ${(props) => props.hasMediaTrack ? '' : LOCAL_MEDIA_HEIGHT};
 `;
