@@ -8,6 +8,8 @@ import { FETCH_TOKEN_REQUEST, DISCONNECT_FROM_ROOM_REQUEST } from './constants';
 import {
   attachLocalMedia,
   connectToRoomSuccess,
+  disconnectFromRoomSuccess,
+  disconnectFromRoomFailure,
   fetchTokenSuccess,
   fetchTokenFailure,
   logActivity,
@@ -61,11 +63,10 @@ function subscribe(room) {
     room.on('disconnected', (currentRoom, err) => {
       if (err) {
         emit(logActivity(`Unexpectedly disconnected: ${err}`));
+        emit(disconnectFromRoomFailure(err));
       }
-      // room.LocalParticipant.tracks.forEach( (track) => {
-      //   track.stop();
-      //   track.detach();
-      // });
+      emit(disconnectFromRoomSuccess());
+      emit(logActivity(`You have left the room '${room.name}'.`));
     });
 
     /* RemoteParticipant joined the room */
@@ -101,20 +102,19 @@ function subscribe(room) {
 }
 
 export function* disconnectFromRoom({ room }) {
-  // const url = `${baseUrl}/token`;
-  // try {
-  //   // const response = yield call(get, url);
-  //   // yield put(fetchTokenSuccess(response.data));
-  //   // yield put(logActivity(`Successfully fetched a token for '${response.data.identity}'.`));
-  //   // yield put(logActivity(`Requesting to connect to '${roomName}'...`));
-  //   // yield connectToRoom(response.data.token, roomName);
-  // } catch (e) {
-  //   // yield put(fetchTokenFailure(e));
-  //   // yield put(logActivity(`An error occurred while trying to join '${roomName}': ${e}`));
-  // }
+  try {
+    room.disconnect();
+    yield put(disconnectFromRoomSuccess());
+    yield put(logActivity(`You have left the room '${room.name}'.`));
+  } catch (e) {
+    yield put(disconnectFromRoomFailure(e));
+    yield put(logActivity(`An error occurred while trying to leave '${room.name}': ${e}`));
+  }
 }
 
 export default function* watcher() {
-  yield takeLatest(FETCH_TOKEN_REQUEST, fetchToken);
-  yield takeLatest(DISCONNECT_FROM_ROOM_REQUEST, disconnectFromRoom);
+  yield [
+    takeLatest(FETCH_TOKEN_REQUEST, fetchToken),
+    takeLatest(DISCONNECT_FROM_ROOM_REQUEST, disconnectFromRoom),
+  ];
 }

@@ -6,10 +6,12 @@
 
 import {
   ATTACH_LOCAL_MEDIA,
-  // CONNECT_TO_ROOM_REQUEST,
+  CONNECT_TO_ROOM_REQUEST,
   CONNECT_TO_ROOM_SUCCESS,
-  // CONNECT_TO_ROOM_FAILURE,
+  CONNECT_TO_ROOM_FAILURE,
   DISCONNECT_FROM_ROOM_REQUEST,
+  DISCONNECT_FROM_ROOM_SUCCESS,
+  DISCONNECT_FROM_ROOM_FAILURE,
   FETCH_TOKEN_REQUEST,
   FETCH_TOKEN_SUCCESS,
   FETCH_TOKEN_FAILURE,
@@ -23,22 +25,32 @@ export const attachLocalMedia = (tracks) => ({
   tracks,
 });
 
-// export const connectToRoomRequest = () => ({
-//   type: CONNECT_TO_ROOM_REQUEST,
-// });
+export const connectToRoomRequest = () => ({
+  type: CONNECT_TO_ROOM_REQUEST,
+});
 
 export const connectToRoomSuccess = (room) => ({
   type: CONNECT_TO_ROOM_SUCCESS,
   room,
 });
 
-// export const connectToRoomFAILURE = (errMsg) => ({
-//   type: CONNECT_TO_ROOM_FAILURE,
-//   errMsg,
-// });
+export const connectToRoomFailure = (errMsg) => ({
+  type: CONNECT_TO_ROOM_FAILURE,
+  errMsg,
+});
 
-export const disconnectFromRoomRequest = () => ({
+export const disconnectFromRoomRequest = (room) => ({
   type: DISCONNECT_FROM_ROOM_REQUEST,
+  room,
+});
+
+export const disconnectFromRoomSuccess = () => ({
+  type: DISCONNECT_FROM_ROOM_SUCCESS,
+});
+
+export const disconnectFromRoomFailure = (errMsg) => ({
+  type: DISCONNECT_FROM_ROOM_FAILURE,
+  errMsg,
 });
 
 export const fetchTokenRequest = (roomName) => ({

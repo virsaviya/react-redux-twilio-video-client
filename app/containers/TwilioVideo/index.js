@@ -22,7 +22,7 @@ import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
 import makeSelectTwilioVideo from './selectors';
 import saga from './saga';
-import { fetchTokenRequest, logActivity } from './actions';
+import { disconnectFromRoomRequest, fetchTokenRequest, logActivity } from './actions';
 import {
   Header,
   LocalMedia,
@@ -55,7 +55,7 @@ export class TwilioVideo extends React.PureComponent { // eslint-disable-line re
         </RemoteMedia>
         <Controls
           joinRoom={(name) => this.props.fetchToken(name)}
-          // leaveRoom={() => this.props.leaveRoom(room)}
+          leaveRoom={() => this.props.leaveRoom(room)}
           log={this.props.log}
           isInRoom={!!this.props.room}
         />
@@ -66,10 +66,12 @@ export class TwilioVideo extends React.PureComponent { // eslint-disable-line re
 
 TwilioVideo.propTypes = {
   fetchToken: PropTypes.func.isRequired,
-  roomName: PropTypes.string,
-  log: PropTypes.array.isRequired,
+  leaveRoom: PropTypes.func.isRequired,
   localMedia: PropTypes.array,
+  log: PropTypes.array.isRequired,
+  remoteMedia: PropTypes.array,
   room: PropTypes.object,
+  roomName: PropTypes.string,
 };
 
 const mapStateToProps = (state) => makeSelectTwilioVideo(state);
@@ -79,7 +81,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchTokenRequest(roomName));
     dispatch(logActivity('Requesting a token and identity...'));
   },
-  // leaveRoom: (room) => disconnectFromRoomRequest(room),
+  leaveRoom: (room) => dispatch(disconnectFromRoomRequest(room)),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

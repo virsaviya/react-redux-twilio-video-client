@@ -19,6 +19,13 @@ export class Controls extends React.PureComponent { // eslint-disable-line react
   state = {
     roomName: undefined,
   }
+  _onClick = () => {
+    if (this.props.isInRoom) {
+      this.props.leaveRoom();
+    } else {
+      this.props.joinRoom(this.state.roomName);
+    }
+  }
   render() {
     return (
       <Wrapper>
@@ -28,8 +35,8 @@ export class Controls extends React.PureComponent { // eslint-disable-line react
             onChange={(e) => this.setState({ roomName: e.target.value })}
             placeholder="Room Name"
           />
-          <Button onClick={() => this.props.joinRoom(this.state.roomName)}>
-            Join Room
+          <Button onClick={this._onClick}>
+            {this.props.isInRoom ? 'Leave Room' : 'Join Room'}
           </Button>
         </JoinRoom>
       </Wrapper>
@@ -38,7 +45,9 @@ export class Controls extends React.PureComponent { // eslint-disable-line react
 }
 
 Controls.propTypes = {
+  isInRoom: PropTypes.bool.isRequired,
   joinRoom: PropTypes.func.isRequired,
+  leaveRoom: PropTypes.func.isRequired,
   log: PropTypes.array.isRequired,
 };
 
