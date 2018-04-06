@@ -35,7 +35,7 @@ function twilioVideoReducer(state = initialState, action) {
     case CONNECT_TO_ROOM_SUCCESS:
       return state.set('room', action.room);
     case FETCH_TOKEN_REQUEST:
-      return statekj
+      return state
         .set('roomName', action.roomName);
     case FETCH_TOKEN_SUCCESS:
       return state
