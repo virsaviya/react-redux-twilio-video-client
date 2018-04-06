@@ -12,7 +12,7 @@ This is a simple app that integrates [Twilio-Video](https://www.twilio.com/docs/
 
 and lots of other buzz-words.  But mostly, it's a really solid, scalable, extensible boilerplate for those who are comfortable in the React / Redux ecosystem.
 
-[Click here](https://react-redux-twilio-video-poc.herokuapp.com/) to play with the deployed app.
+[Click here](https://twilio-video-react-redux-poc.herokuapp.com/) to play with the deployed app.
 
 ## To get started
 
