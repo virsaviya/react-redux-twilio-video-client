@@ -22,7 +22,7 @@ import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
 import makeSelectTwilioVideo from './selectors';
 import saga from './saga';
-import { fetchTokenRequest } from './actions';
+import { fetchTokenRequest, logActivity } from './actions';
 import {
   Header,
   LocalMedia,
@@ -32,18 +32,22 @@ import {
 
 export class TwilioVideo extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   _renderMedia(media, kind, width) {
-    if (media) {
+    if (media && media.length) {
       const track = media.find((m) => m.kind === kind);
-      return <MediaTrack track={track} width={width} kind={kind} />;
+      if (track) {
+        return <MediaTrack track={track} width={width} kind={kind} />;
+      }
     }
     return <div />;
   }
   render() {
-    const { roomName, localMedia } = this.props;
+    const { roomName, room, localMedia, remoteMedia } = this.props;
     return (
       <Wrapper>
         <Header>{roomName ? `You are in room '${roomName}'` : 'Welcome'}</Header>
         <RemoteMedia>
+          {this._renderMedia(remoteMedia, AUDIO)}
+          {this._renderMedia(remoteMedia, VIDEO, '600px')}
           <LocalMedia hasMediaTrack={!!this.props.localMedia}>
             {this._renderMedia(localMedia, AUDIO)}
             {this._renderMedia(localMedia, VIDEO, LOCAL_MEDIA_WIDTH)}
@@ -51,7 +55,9 @@ export class TwilioVideo extends React.PureComponent { // eslint-disable-line re
         </RemoteMedia>
         <Controls
           joinRoom={(name) => this.props.fetchToken(name)}
+          // leaveRoom={() => this.props.leaveRoom(room)}
           log={this.props.log}
+          isInRoom={!!this.props.room}
         />
       </Wrapper>
     );
@@ -63,12 +69,17 @@ TwilioVideo.propTypes = {
   roomName: PropTypes.string,
   log: PropTypes.array.isRequired,
   localMedia: PropTypes.array,
+  room: PropTypes.object,
 };
 
 const mapStateToProps = (state) => makeSelectTwilioVideo(state);
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchToken: (roomName) => dispatch(fetchTokenRequest(roomName)),
+  fetchToken: (roomName) => {
+    dispatch(fetchTokenRequest(roomName));
+    dispatch(logActivity('Requesting a token and identity...'));
+  },
+  // leaveRoom: (room) => disconnectFromRoomRequest(room),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

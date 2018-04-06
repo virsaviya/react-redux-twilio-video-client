@@ -4,13 +4,16 @@
  *
  */
 
-import { fromJS } from 'immutable';
+import { fromJS, Set } from 'immutable';
 import {
   ATTACH_LOCAL_MEDIA,
   CONNECT_TO_ROOM_SUCCESS,
   FETCH_TOKEN_REQUEST,
   FETCH_TOKEN_SUCCESS,
   FETCH_TOKEN_FAILURE,
+  LOG_ACTIVITY,
+  UPDATE_PARTICIPANTS,
+  UPDATE_TRACKS,
 } from './constants';
 
 const initialState = fromJS({
@@ -20,37 +23,40 @@ const initialState = fromJS({
   identity: undefined,
   errMsg: undefined,
   log: [],
-  localMedia: undefined,
+  localMedia: [],
+  participants: [],
+  remoteMedia: [],
 });
 
 function twilioVideoReducer(state = initialState, action) {
-  const log = state.get('log');
   switch (action.type) {
     case ATTACH_LOCAL_MEDIA:
       return state.set('localMedia', action.tracks);
-    case FETCH_TOKEN_REQUEST: {
-      const message = `Requesting to join room '${action.roomName}'...`;
-      const updatedLog = log.set(log.size, message);
-      return state
-        .set('roomName', action.roomName)
-        .set('log', updatedLog);
-    }
     case CONNECT_TO_ROOM_SUCCESS:
       return state.set('room', action.room);
-    case FETCH_TOKEN_SUCCESS: {
-      const message = `Successfully joined room '${state.get('roomName')}'.`;
-      const updatedLog = log.set(log.size, message);
+    case FETCH_TOKEN_REQUEST:
+      return statekj
+        .set('roomName', action.roomName);
+    case FETCH_TOKEN_SUCCESS:
       return state
         .set('token', action.data.token)
-        .set('identity', action.data.identity)
-        .set('log', updatedLog);
-    }
-    case FETCH_TOKEN_FAILURE: {
-      const message = `An error occurred while trying to join '${state.get('roomName')}': ${action.errMsg}`;
-      const updatedLog = log.set(log.size, message);
+        .set('identity', action.data.identity);
+    case FETCH_TOKEN_FAILURE:
       return state
-        .set('errMsg', action.errMsg)
-        .set('log', updatedLog);
+        .set('errMsg', action.errMsg);
+    case LOG_ACTIVITY: {
+      const log = state.get('log');
+      const updatedLog = log.set(log.size, action.message);
+      return state.set('log', updatedLog);
+    }
+    case UPDATE_PARTICIPANTS:
+      return state
+        .set('participants', action.participants);
+    case UPDATE_TRACKS: {
+      const existingRemoteMedia = state.get('remoteMedia').toSet();
+      const newRemoteMedia = Set(action.tracks);
+      const updatedRemoteMedia = existingRemoteMedia.union(newRemoteMedia).toList();
+      return state.set('remoteMedia', updatedRemoteMedia);
     }
     default:
       return state;
